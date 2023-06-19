@@ -1,0 +1,9 @@
+.products{
+    height: 100vh;
+    display: grid;
+    align-items: center;
+}
+
+.products h2{
+    font-weight: 400;
+}

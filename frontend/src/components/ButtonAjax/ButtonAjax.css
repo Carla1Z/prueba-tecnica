@@ -1,0 +1,16 @@
+.buttonajax{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.textarea{
+    border-radius: 5px;
+    width: 200px;
+    height: 100px;
+}
+@media(max-width:900px){
+    .buttonajax{
+        flex-direction: column;
+    }
+}

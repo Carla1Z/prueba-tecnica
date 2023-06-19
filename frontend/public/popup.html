@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;400;600;800&display=swap"
+      rel="stylesheet"
+    />
+    <title>Popup Product</title>
+    <style>
+      .popup {
+        font-family: "Montserrat", sans-serif;
+        position: relative;
+      }
+      .title {
+        color: #fff;
+        text-shadow: 2px 2px 0 black;
+        background: rgba(0, 0, 0, 0.5);
+        padding: 0.2rem 0.5rem;
+        border-radius: 10px;
+        position: absolute;
+        top: 0;
+        left: 30%;
+      }
+      .image {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        left: 0;
+      }
+      .buttons {
+        position: absolute;
+        bottom: 10%;
+        left: 25%;
+      }
+      .buttons button {
+        display: inline-block;
+        cursor: pointer;
+        height: 2.6rem;
+        padding: 0 30px;
+        border: none;
+        border-radius: 5px;
+        font-size: 18px;
+        color: #fff;
+        text-shadow: 0 1px 0 rgb(0 0 0 / 40%);
+        box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.4);
+        transition: box-shadow 0.15s ease, transform 0.15s ease;
+      }
+      .buttons button:hover {
+        transform: translateY(-0.1em);
+      }
+      .ok {
+        background: radial-gradient(
+          100% 100% at 100% 0%,
+          #89e5ff 0%,
+          #5468ff 100%
+        );
+      }
+      .ok:hover {
+        box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.4), inset 0 -1.8px 0 #5e60ce;
+      }
+      .close {
+        background: radial-gradient(
+          100% 100% at 100% 0%,
+          #ffba08 0%,
+          #d00000 100%
+        );
+      }
+      .close:hover {
+        box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.4), inset 0 -1.8px 0 #a41623;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="popup">
+      <h2 class="title" id="product-name">Producto</h2>
+      <img src="" alt="Product" class="image" id="product-image" />
+      <span class="buttons">
+        <button class="ok" data-index="0">Ok</button>
+        <button class="close">Cerrar</button>
+      </span>
+    </div>
+    <script>
+      function resizeImage() {
+        const productImage = document.getElementById("product-image");
+        const popupWidth = window.innerWidth;
+        const popupHeight = window.innerHeight;
+
+        productImage.style.maxWidth = `${popupWidth}px`;
+        productImage.style.maxHeight = `${popupHeight}px`;
+      }
+
+      window.addEventListener("message", function (event) {
+        const selectedProduct = event.data.product;
+        const index = event.data.index;
+
+        const productTitle = document.getElementById("product-name");
+        const productImage = document.getElementById("product-image");
+
+        if (selectedProduct) {
+          const productName = selectedProduct.nombre;
+          const productImageUrl = selectedProduct.imagen;
+
+          if (productName) {
+            productTitle.innerText = productName;
+          }
+
+          if (productImageUrl) {
+            productImage.src = productImageUrl;
+            productImage.onload = resizeImage;
+          }
+        }
+
+        const okButton = document.querySelector(".ok");
+        okButton.setAttribute("data-index", index.toString());
+      });
+
+      window.addEventListener("resize", resizeImage);
+
+      const okButton = document.querySelector(".ok");
+      const closeButton = document.querySelector(".close");
+
+      okButton.addEventListener("click", function () {
+        const index = parseInt(okButton.getAttribute("data-index"));
+        window.opener.updateCounter(index);
+      });
+
+      closeButton.addEventListener("click", function () {
+        window.close();
+      });
+    </script>
+  </body>
+</html>
