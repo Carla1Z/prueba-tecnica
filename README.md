@@ -1,4 +1,3 @@
-# Perfil y Pruebas nuevas incorporaciones Ingertec
 ## Frontend
 * Para las pruebas tienen disponible Internet para ayudarse y descargarse los que les haga falta.
 * Empezar una página html de cero que dentro utilice Bootstrap 4 o 5.
